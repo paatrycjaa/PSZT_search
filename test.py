@@ -2,10 +2,10 @@ import numpy as np
 
 class OnetoOne:
 	def __init__(self, A, B):
-		self.A=A
-		self.B=B
-		self.CardsValues=[x for x in range(1,11)]
-		self.Piles=np.random.randint(2,size=10) # 0 - on A pile || 1 - on B pile
+		self.A=A 				#parameter for A pile
+		self.B=B 				#parameter for B pile
+		self.CardsValues=[x for x in range(1,11)]	#values of cards SUM is 55
+		self.Piles=np.random.randint(2,size=10) 	# 0 - on A pile || 1 - on B pile
 
 	def getCost(self,PilesVal):
 
@@ -31,7 +31,7 @@ class OnetoOne:
 
 
 if __name__== "__main__":
-	new=OnetoOne(30,25)
+	new=OnetoOne(25,14)
 	#print(new.getCost(new.Piles))
 	new.simulation()
 
