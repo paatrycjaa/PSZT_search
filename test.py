@@ -31,7 +31,7 @@ class OnetoOne:
 
 
 if __name__== "__main__":
-	new=OnetoOne(25,14)
+	new=OnetoOne(50,5)
 	#print(new.getCost(new.Piles))
 	new.simulation()
 
