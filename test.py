@@ -1,4 +1,5 @@
 import numpy as np
+import random
 
 class OnetoOne:
 	def __init__(self, A, B):
@@ -20,20 +21,26 @@ class OnetoOne:
 		print(self.Piles)
 		print(self.getCost(self.Piles))
 		for x in range(10000):
-			newPiles=np.random.randint(2,size=10)
+			#newPiles=np.random.randint(2,size=10)
+			newPiles=[1 if x+random.gauss(0,1)>=0.5 else 0 for x in self.Piles]
 			if self.getCost(self.Piles)>self.getCost(newPiles):
 				self.Piles=newPiles
 				print(self.getCost(self.Piles))
+			if self.getCost(self.Piles)==abs(55-(self.A+self.B)): break
 
 		print(self.Piles)
 		print(self.getCost(self.Piles))
 
+	def setAB(self,A,B):
+		self.A=A
+		self.B=B
+
 
 
 if __name__== "__main__":
-	new=OnetoOne(50,5)
+	one_to_one=OnetoOne(40,15)
 	#print(new.getCost(new.Piles))
-	new.simulation()
+	one_to_one.simulation()
 
 
 
