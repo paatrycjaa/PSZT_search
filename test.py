@@ -1,5 +1,6 @@
 import numpy as np
 import random
+import itertools as it
 
 class OnetoOne:
 	def __init__(self, A, B):
@@ -26,7 +27,7 @@ class OnetoOne:
 			if self.getCost(self.Piles)>self.getCost(newPiles):
 				self.Piles=newPiles
 				print(self.getCost(self.Piles))
-			if self.getCost(self.Piles)==abs(55-(self.A+self.B)): break
+			if self.getCost(self.Piles)==abs(55-(self.A+self.B)): break #czy tu napewno abs?
 
 		print(self.Piles)
 		print(self.getCost(self.Piles))
@@ -36,11 +37,43 @@ class OnetoOne:
 		self.B=B
 
 
+class FullSearch:
+	def __init__(self, A, B):
+		self.A = A 				#parameter for A pile
+		self.B = B 				#parameter for B pile
+		self.CardsValues = [x for x in range(1,11)]	#values of cards SUM is 55
+		self.Piles = None
+
+	def getCost(self, PilesVal):
+		self.A_pile = [x for x, y in zip(self.CardsValues, PilesVal) if y == 0]
+		self.B_pile = [x for x, y in zip(self.CardsValues, PilesVal) if y == 1]
+
+		cost = abs(sum(self.A_pile) - self.A) + abs(sum(self.B_pile) - self.B)
+		return cost
+
+	def simulation(self):
+		permutation_with_replacment = [x for x in it.product([1, 0], repeat=10)]
+		cost = 1000
+		for combination in permutation_with_replacment:
+			new_cost = self.getCost(combination)
+			if cost > new_cost:
+				cost = new_cost
+				self.Piles = combination
+
+		print(self.Piles)
+		print(self.getCost(self.Piles))
+
+
 
 if __name__== "__main__":
-	one_to_one=OnetoOne(40,15)
+	one_to_one = OnetoOne(40, 15)
 	#print(new.getCost(new.Piles))
 	one_to_one.simulation()
+
+	full_search = FullSearch(40, 15)
+	full_search.simulation()
+
+
 
 
 
