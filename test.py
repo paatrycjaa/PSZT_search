@@ -1,6 +1,7 @@
 import numpy as np
 import random
 import itertools as it
+from timeit import default_timer as timer
 
 class OnetoOne:
 	def __init__(self, A, B):
@@ -19,18 +20,16 @@ class OnetoOne:
 
 	def simulation(self):
 
-		print(self.Piles)
-		print(self.getCost(self.Piles))
-		for x in range(100):
-			#newPiles=np.random.randint(2,size=10)
+		
+		for x in range(1000):
 			newPiles=[1 if x+random.gauss(0,1)>=0.5 else 0 for x in self.Piles]
 			if self.getCost(self.Piles)>self.getCost(newPiles):
 				self.Piles=newPiles
-				print(self.getCost(self.Piles))
 			if self.getCost(self.Piles)==abs(55-(self.A+self.B)): break #czy tu napewno abs?
 
-		print(self.Piles)
-		print(self.getCost(self.Piles))
+		#print(self.Piles)
+		#print(self.getCost(self.Piles))
+		return self.getCost(self.Piles)
 
 	def setAB(self,A,B):
 		self.A=A
@@ -59,14 +58,56 @@ class FullSearch:
 				cost = new_cost
 				self.Piles = combination
 
-		print(self.Piles)
-		print(self.getCost(self.Piles))
+		#print(self.Piles)
+		#print(self.getCost(self.Piles))
+		return self.getCost(self.Piles)
+
+	def setAB(self,A,B):
+		self.A=A
+		self.B=B
 
 
-from timeit import default_timer as timer
+def sum_to_n(n, size, limit=None):
+    """Produce all lists of `size` positive integers in decreasing order
+    that add up to `n`."""
+    if size == 1:
+        yield [n]
+        return
+    if limit is None:
+        limit = n
+    start = (n + size - 1) // size
+    stop = min(limit, n - size + 1) + 1
+    for i in range(start, stop):
+        for tail in sum_to_n(n - i, size - 1, i):
+            yield [i] + tail
 
 
 if __name__== "__main__":
+
+	one_to_one=OnetoOne(0,0)
+	full_search=FullSearch(0,0)
+	one_results=[]
+	full_results=[]
+
+	start_one=timer()
+	for x in sum_to_n(55,2):
+		one_to_one.setAB(x[0],x[1])
+		one_results.append(one_to_one.simulation())
+	t_one = timer() - start_one
+
+	start_full=timer()
+	for x in sum_to_n(55,2):
+		full_search.setAB(x[0],x[1])
+		full_results.append(full_search.simulation())
+	t_full = timer() - start_full
+
+
+	print(("%s : " + "%0.3g" + " seconds") % ("One_to_one",t_one))
+	print(("%s : " + "%0.3g" + " seconds") % ("FullSearch",t_full))
+	print("Are all results the same: " + str(one_results==full_results))
+
+
+	'''
 	one_to_one = OnetoOne(42, 17)
 	#print(new.getCost(new.Piles))
 	start = timer()
@@ -78,7 +119,9 @@ if __name__== "__main__":
 	full_search.simulation()
 	t = timer() - start
 	print(("%s : " + "%0.3g" + " seconds") % ("FullSearch", t))
+	'''
 
+	
 
 
 
