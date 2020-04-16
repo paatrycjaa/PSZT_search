@@ -19,16 +19,13 @@ class OnetoOne:
 		return cost
 
 	def simulation(self):
-
 		
-		for x in range(1000):
+		for x in range(1024):
 			newPiles=[1 if x+random.gauss(0,1)>=0.5 else 0 for x in self.Piles]
 			if self.getCost(self.Piles)>self.getCost(newPiles):
 				self.Piles=newPiles
-			if self.getCost(self.Piles)==abs(55-(self.A+self.B)): break #czy tu napewno abs?
+			if self.getCost(self.Piles)==abs(55-(self.A+self.B)): break
 
-		#print(self.Piles)
-		#print(self.getCost(self.Piles))
 		return self.getCost(self.Piles)
 
 	def setAB(self,A,B):
@@ -58,8 +55,6 @@ class FullSearch:
 				cost = new_cost
 				self.Piles = combination
 
-		#print(self.Piles)
-		#print(self.getCost(self.Piles))
 		return self.getCost(self.Piles)
 
 	def setAB(self,A,B):
@@ -101,29 +96,8 @@ if __name__== "__main__":
 		full_results.append(full_search.simulation())
 	t_full = timer() - start_full
 
-
 	print(("%s : " + "%0.3g" + " seconds") % ("One_to_one",t_one))
 	print(("%s : " + "%0.3g" + " seconds") % ("FullSearch",t_full))
 	print("Are all results the same: " + str(one_results==full_results))
-
-
-	'''
-	one_to_one = OnetoOne(42, 17)
-	#print(new.getCost(new.Piles))
-	start = timer()
-	one_to_one.simulation()
-	t = timer() - start
-	print(("%s : " + "%0.3g" + " seconds") % ("One_to_one",t))
-	full_search = FullSearch(42, 17)
-	start = timer()
-	full_search.simulation()
-	t = timer() - start
-	print(("%s : " + "%0.3g" + " seconds") % ("FullSearch", t))
-	'''
-
-	
-
-
-
 
 	
