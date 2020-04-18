@@ -6,13 +6,13 @@ def read_data(x):
 	""""Read from console A and B pile """
 	invalid = True
 	while invalid :
-		A = int(input("Wpisz wartość dla pierwszej kupki (1-55)"))
+		A = int(input("Choose value for the first pile (1-55)"))
 		if A >= 1 & A <= 55:
 			x.append(A)
 			invalid = False
 	invalid = True
 	while invalid :
-		B = int(input("Wpisz wartość dla drugiej kupki (1-55) "))
+		B = int(input("Choose value for the second pile (1-55) "))
 		if B >= 1 & B <= 55:
 			x.append(B)
 			invalid = False
