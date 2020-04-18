@@ -1,4 +1,5 @@
 from timeit import default_timer as timer
+import numpy as np
 import pytest
 
 def sum_to_n(n, size, limit=None):
@@ -14,6 +15,11 @@ def sum_to_n(n, size, limit=None):
     for i in range(start, stop):
         for tail in sum_to_n(n - i, size - 1, i):
             yield [i] + tail
+
+def get_random_AB(n, min, max):
+    for x in range(n) :
+        yield np.random.randint(min, max, size=2)
+
 
 def test_1 (one_to_one, full_search):
     one_results = []
@@ -34,5 +40,31 @@ def test_1 (one_to_one, full_search):
     print(("%s : " + "%0.3g" + " seconds") % ("One_to_one", t_one))
     print(("%s : " + "%0.3g" + " seconds") % ("FullSearch", t_full))
 
-    assert one_results == full_results, "Test succeed. The costs from two algorithms are the same"
+    assert one_results == full_results, "Test failed. The costs from two algorithms are not the same"
+
+def test_2(one_to_one, full_search):
+    one_results = []
+    full_results = []
+    t_one = 0
+    t_full = 0
+    for x in get_random_AB(20, 1, 55):
+        start_one = timer()
+        one_to_one.setAB(x[0], x[1])
+        one_results.append(one_to_one.simulation())
+        end_one = timer() - start_one
+        t_one = t_one + end_one
+
+        start_one = timer()
+        full_search.setAB(x[0], x[1])
+        full_results.append(full_search.simulation())
+        end_one = timer() - start_one
+        t_full = t_full + end_one
+
+    print("Test 2")
+    print(("%s : " + "%0.3g" + " seconds") % ("One_to_one", t_one))
+    print(("%s : " + "%0.3g" + " seconds") % ("FullSearch", t_full))
+
+    assert one_results == full_results, "Test failed. The costs from two algorithms are not the same"
+
+
 
