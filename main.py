@@ -32,6 +32,9 @@ class OnetoOne:
 		self.A=A
 		self.B=B
 
+	def get_result(self):
+		return self.Piles
+
 
 class FullSearch:
 	def __init__(self, A, B):
@@ -61,6 +64,9 @@ class FullSearch:
 		self.A=A
 		self.B=B
 
+	def get_result(self):
+		return self.Piles
+
 
 def sum_to_n(n, size, limit=None):
     """Produce all lists of `size` positive integers in decreasing order
@@ -76,6 +82,21 @@ def sum_to_n(n, size, limit=None):
         for tail in sum_to_n(n - i, size - 1, i):
             yield [i] + tail
 
+def read_data(x):
+	""""Read from console A and B pile """
+	invalid = True
+	while invalid :
+		A = int(input("Wpisz wartość dla pierwszej kupki (1-55)"))
+		if A >= 1 & A <= 55:
+			x.append(A)
+			invalid = False
+	invalid = True
+	while invalid :
+		B = int(input("Wpisz wartość dla drugiej kupki (1-55) "))
+		if B >= 1 & B <= 55:
+			x.append(B)
+			invalid = False
+
 
 if __name__== "__main__":
 
@@ -83,6 +104,18 @@ if __name__== "__main__":
 	full_search=FullSearch(0,0)
 	one_results=[]
 	full_results=[]
+	piles =[]
+
+	read_data(piles)
+	one_to_one.setAB(piles[0], piles[1])
+	full_search.setAB(piles[0], piles[1])
+	cost_o = one_to_one.simulation()
+	cost_f = full_search.simulation()
+	if cost_f == cost_o :
+		print("The same cost for solutions : {}".format(cost_f) )
+		print('Solution one_to_one {0}'.format(one_to_one.get_result()))
+		print('Solution full_search {0}'.format(full_search.get_result()))
+
 
 	start_one=timer()
 	for x in sum_to_n(55,2):
