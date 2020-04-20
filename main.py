@@ -6,7 +6,7 @@ def read_data(x):
 	""""Read from console A and B pile """
 	invalid = True
 	while invalid :
-		A = int(input("Choose value for the first pile (1-55)"))
+		A = int(input("Choose value for the first pile (1-55) "))
 		if A >= 1 & A <= 55:
 			x.append(A)
 			invalid = False
@@ -37,9 +37,11 @@ if __name__== "__main__":
 	t_full = timer() - start_one
 
 	if cost_f == cost_o :
-		print("The same cost for solutions : {}".format(cost_f) )
-		print('Solution one_to_one {0}, time: {1}'.format(one_to_one.get_result(), t_one))
-		print('Solution full_search {0}, time: {1}'.format(full_search.get_result(), t_full))
+		one_result=one_to_one.get_result()
+		full_result=full_search.get_result()
+		print("\nCosts for both solutions are the same and equal: {}".format(cost_f) )
+		print('\nSolution one_to_one A:{0} B:{1} \nExecution time: {2:0.3g} seconds'.format(one_result[0],one_result[1], t_one))
+		print('\nSolution full_search A:{0} B:{1} \nExecution time: {2:0.3g} seconds'.format(full_result[0],full_result[1], t_full))
 	else: print('The cost are not the same.')
 
 	test_1(OnetoOne(0, 0), FullSearch(0, 0))

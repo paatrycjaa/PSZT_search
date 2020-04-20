@@ -12,10 +12,10 @@ class OnetoOne:
 
     def getCost(self, PilesVal):
 
-        self.A_pile = [x for x, y in zip(self.CardsValues, PilesVal) if y == 0]
-        self.B_pile = [x for x, y in zip(self.CardsValues, PilesVal) if y == 1]
+        A_pile = [x for x, y in zip(self.CardsValues, PilesVal) if y == 0]
+        B_pile = [x for x, y in zip(self.CardsValues, PilesVal) if y == 1]
 
-        cost = abs(sum(self.A_pile) - self.A) + abs(sum(self.B_pile) - self.B)
+        cost = abs(sum(A_pile) - self.A) + abs(sum(B_pile) - self.B)
         return cost
 
     def simulation(self):
@@ -33,7 +33,9 @@ class OnetoOne:
         self.B = B
 
     def get_result(self):
-        return self.Piles
+        A_pile = [x for x, y in zip(self.CardsValues, self.Piles) if y == 0]
+        B_pile = [x for x, y in zip(self.CardsValues, self.Piles) if y == 1]
+        return [A_pile,B_pile]
 
 
 class FullSearch:
@@ -44,9 +46,9 @@ class FullSearch:
         self.Piles = []
 
     def getCost(self, PilesVal):
-        self.A_pile = [x for x, y in zip(self.CardsValues, PilesVal) if y == 0]
-        self.B_pile = [x for x, y in zip(self.CardsValues, PilesVal) if y == 1]
-        cost = abs(sum(self.A_pile) - self.A) + abs(sum(self.B_pile) - self.B)
+        A_pile = [x for x, y in zip(self.CardsValues, PilesVal) if y == 0]
+        B_pile = [x for x, y in zip(self.CardsValues, PilesVal) if y == 1]
+        cost = abs(sum(A_pile) - self.A) + abs(sum(B_pile) - self.B)
         return cost
 
     def simulation(self):
@@ -65,4 +67,6 @@ class FullSearch:
         self.B = B
 
     def get_result(self):
-        return self.Piles
+        A_pile = [x for x, y in zip(self.CardsValues, self.Piles) if y == 0]
+        B_pile = [x for x, y in zip(self.CardsValues, self.Piles) if y == 1]
+        return [A_pile,B_pile]
