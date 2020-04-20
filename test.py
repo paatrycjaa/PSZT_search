@@ -1,6 +1,5 @@
 from timeit import default_timer as timer
 import numpy as np
-#import pytest
 
 def sum_to_n(n, size, limit=None):
     """Produce all lists of `size` positive integers in decreasing order
